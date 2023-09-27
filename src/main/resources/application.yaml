@@ -13,4 +13,8 @@ spring:
     console:
       enabled: true
 
+externalApi:
+  pollService:
+    url: localhost:8082
+
 

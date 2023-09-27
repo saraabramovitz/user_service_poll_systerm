@@ -1,9 +1,11 @@
 package com.userServicePollSysterm.service;
 
 import com.userServicePollSysterm.model.User;
+import com.userServicePollSysterm.pollSystem.PollService;
 import com.userServicePollSysterm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import javax.persistence.EntityNotFoundException;
 
@@ -11,7 +13,9 @@ import javax.persistence.EntityNotFoundException;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    @Autowired
+    private PollService pollService;
 
     @Override
     public void createUser(User user) {
@@ -24,9 +28,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUserById(Long id) {
-        // delete all user data in the poll system
-        userRepository.deleteUserById(id);
+    public void deleteUserById(Long userId) {
+        System.out.println("hhhhhhhhhhhhhhhhhhhhhh");
+        pollService.deletePollAnswersByUserId(userId);
+        System.out.println("hhhhhhhhhhhhhhhhhhhhhh");
+        userRepository.deleteUserById(userId);
+
 
     }
 
@@ -36,7 +43,6 @@ public class UserServiceImpl implements UserService{
     }
 
     public void registerUserById(Long id) {
-        // check if user is in DB
         if (userRepository.checkIfUserExists(id)) {
             userRepository.registerUserById(id);
         } else {

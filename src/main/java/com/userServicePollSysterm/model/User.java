@@ -10,12 +10,12 @@ public class User {
     private Integer age;
     private String address;
     private LocalDate joiningDate;
-    private Boolean is_registered;
+    private Boolean isRegistered;
 
 
     public User(){}
 
-    public User(Long id, String firstName, String lastName, String email, Integer age, String address, LocalDate joiningDate, Boolean is_registered) {
+    public User(Long id, String firstName, String lastName, String email, Integer age, String address, LocalDate joiningDate, Boolean isRegistered) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,7 +23,7 @@ public class User {
         this.age = age;
         this.address = address;
         this.joiningDate = joiningDate;
-        this.is_registered = is_registered;
+        this.isRegistered = isRegistered;
     }
 
     public Long getId() {
@@ -54,8 +54,8 @@ public class User {
         return joiningDate;
     }
 
-    public Boolean getIs_registered() {
-        return is_registered;
+    public Boolean getIsRegistered() {
+        return isRegistered;
     }
 
     public void setId(Long id) {
@@ -86,7 +86,7 @@ public class User {
         this.joiningDate = joiningDate;
     }
 
-    public void setIs_registered(Boolean is_registered) {
-        this.is_registered = is_registered;
+    public void setIsRegistered(Boolean isRegistered) {
+        this.isRegistered = isRegistered;
     }
 }

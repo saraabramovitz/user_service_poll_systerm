@@ -1,7 +1,10 @@
 package com.userServicePollSysterm.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.userServicePollSysterm.pollSystem.PollService;
 import com.userServicePollSysterm.model.User;
+
+import com.userServicePollSysterm.model.QuestionResponse;
 import com.userServicePollSysterm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+    @Autowired
+    private PollService pollService;
 
 
     @PostMapping("/create")
