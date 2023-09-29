@@ -4,10 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.userServicePollSysterm.pollSystem.PollService;
 import com.userServicePollSysterm.model.User;
 
-import com.userServicePollSysterm.model.QuestionResponse;
 import com.userServicePollSysterm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -38,6 +39,11 @@ public class UserController {
     public User getUserById(@PathVariable Long userId){
         return userService.getUserById(userId);
     }
+    @GetMapping("/all")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
 
     @PutMapping("register/{userId}")
     public void registerUserById(@PathVariable Long userId){

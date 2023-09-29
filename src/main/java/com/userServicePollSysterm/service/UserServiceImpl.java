@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     private PollService pollService;
+
 
     @Override
     public void createUser(User user) {
@@ -29,12 +31,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUserById(Long userId) {
-        System.out.println("hhhhhhhhhhhhhhhhhhhhhh");
         pollService.deletePollAnswersByUserId(userId);
-        System.out.println("hhhhhhhhhhhhhhhhhhhhhh");
         userRepository.deleteUserById(userId);
-
-
     }
 
     @Override
@@ -48,6 +46,11 @@ public class UserServiceImpl implements UserService{
         } else {
             throw new EntityNotFoundException("User with id " + id + " not found.");
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.getAllUsers();
     }
 
 }

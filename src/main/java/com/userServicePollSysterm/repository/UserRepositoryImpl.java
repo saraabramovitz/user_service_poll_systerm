@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserRepositoryImpl implements UserRepository{
 
@@ -15,6 +17,7 @@ public class UserRepositoryImpl implements UserRepository{
     JdbcTemplate jdbcTemplate;
     @Autowired
     UserMapper userMapper;
+
 
     @Override
     public void createUser(User user) {
@@ -57,6 +60,12 @@ public class UserRepositoryImpl implements UserRepository{
             System.out.println("Empty Data Warning");
             return null;
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        String sql = "SELECT * FROM " + USER_TABLE_NAME;
+        return jdbcTemplate.query(sql, userMapper);
     }
 
     @Override
