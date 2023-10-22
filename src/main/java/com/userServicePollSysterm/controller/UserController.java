@@ -6,6 +6,8 @@ import com.userServicePollSysterm.model.User;
 
 import com.userServicePollSysterm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,37 +23,62 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public void createUser(@RequestBody User user) throws JsonProcessingException {
-        userService.createUser(user);
+    public ResponseEntity<?> createUser(@RequestBody User user) throws JsonProcessingException {
+        try {
+            userService.createUser(user);
+            return ResponseEntity.ok("User created successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     @PutMapping("/update")
-    public void updateUser(@RequestBody User user) {
-        userService.updateUser(user);
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        try {
+            userService.updateUser(user);
+            return ResponseEntity.ok("User updated successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{userId}")
-    public void deleteUserById(@PathVariable Long userId){
-        userService.deleteUserById(userId);
+    public ResponseEntity<?> deleteUserById(@PathVariable Long userId){
+        try {
+            userService.deleteUserById(userId);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable Long userId){
-        return userService.getUserById(userId);
-    }
-    @GetMapping("/all")
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<?> getUserById(@PathVariable Long userId){
+        try {
+            return ResponseEntity.ok(userService.getUserById(userId));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers(){
+        try {
+            return ResponseEntity.ok(userService.getAllUsers());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
 
     @PutMapping("register/{userId}")
-    public void registerUserById(@PathVariable Long userId){
-        userService.registerUserById(userId);
+    public ResponseEntity<?> registerUserById(@PathVariable Long userId){
+        try {
+            userService.registerUserById(userId);
+            return ResponseEntity.ok("User registered successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
-
-
-
 
 
 }

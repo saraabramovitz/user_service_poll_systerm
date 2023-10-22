@@ -6,9 +6,8 @@ import com.userServicePollSysterm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,30 +20,69 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void createUser(User user) {
-        userRepository.createUser(user);
+        try {
+            if (user.getId() == null){
+                String userEmail = user.getEmail();
+                if(userRepository.getUserByEmail(userEmail) == null){
+                    userRepository.createUser(user);
+                } else {
+                    throw new IllegalArgumentException("Email already exists.");
+                }
+            } else {
+                throw new IllegalArgumentException("User already exists.");
+            }
+        } catch (IllegalArgumentException e){
+            throw e;
+        }
     }
 
     @Override
     public void updateUser(User user) {
-        userRepository.updateUser(user);
+        try {
+            User selectedUser = userRepository.getUserById(user.getId());
+            if (selectedUser != null) {
+                if (user.getEmail() == selectedUser.getEmail()) {
+                    userRepository.updateUser(user);
+                } else {
+                    if (userRepository.getUserByEmail(user.getEmail()) == null) {
+                        userRepository.updateUser(user);
+                    } else {
+                        throw new IllegalArgumentException("Email already exists.");
+                    }
+                }
+            } else {
+                throw new IllegalArgumentException("User does not exist.");
+            }
+        } catch (IllegalArgumentException e){
+            throw e;
+        }
     }
+
 
     @Override
     public void deleteUserById(Long userId) {
-        pollService.deletePollAnswersByUserId(userId);
-        userRepository.deleteUserById(userId);
+        try {
+            pollService.deletePollAnswersByUserId(userId);
+            if(userRepository.getUserById(userId) != null){
+                userRepository.deleteUserById(userId);
+            } else {
+                throw new IllegalArgumentException("User does not exist.");
+            }
+        } catch (IllegalArgumentException e){
+            throw e;
+        }
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.getUserById(id);
-    }
-
-    public void registerUserById(Long id) {
-        if (userRepository.checkIfUserExists(id)) {
-            userRepository.registerUserById(id);
-        } else {
-            throw new EntityNotFoundException("User with id " + id + " not found.");
+    public User getUserById(Long userId) {
+        try {
+            if(userRepository.getUserById(userId) != null){
+                return userRepository.getUserById(userId);
+            } else {
+                throw new IllegalArgumentException("User does not exist.");
+            }
+        } catch (IllegalArgumentException e){
+            throw e;
         }
     }
 
@@ -52,6 +90,20 @@ public class UserServiceImpl implements UserService{
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
     }
+
+    public void registerUserById(Long userId) {
+        try {
+            if(userRepository.getUserById(userId) != null){
+                userRepository.registerUserById(userId);
+            } else {
+                throw new IllegalArgumentException("User does not exist.");
+            }
+        } catch (IllegalArgumentException e){
+            throw e;
+        }
+    }
+
+
 
 }
 

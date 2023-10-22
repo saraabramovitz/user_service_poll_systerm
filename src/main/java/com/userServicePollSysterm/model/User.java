@@ -26,6 +26,7 @@ public class User {
         this.isRegistered = isRegistered;
     }
 
+
     public Long getId() {
         return id;
     }
@@ -57,6 +58,7 @@ public class User {
     public Boolean getIsRegistered() {
         return isRegistered;
     }
+
 
     public void setId(Long id) {
         this.id = id;

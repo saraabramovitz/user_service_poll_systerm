@@ -13,5 +13,4 @@ public interface PollService {
     @DeleteMapping("/poolAnswer/deleteUserAnswers/{userId}")
     void deletePollAnswersByUserId(@PathVariable Long userId);
 
-
 }

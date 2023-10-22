@@ -23,26 +23,24 @@ public class UserRepositoryImpl implements UserRepository{
     public void createUser(User user) {
         String sql = "INSERT INTO " + USER_TABLE_NAME + " (first_name, last_name, email, age, address) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(
-                sql,
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getAge(),
-                user.getAddress()
-        );
+            sql,
+            user.getFirstName(),
+            user.getLastName(),
+            user.getEmail(),
+            user.getAge(),
+            user.getAddress());
     }
 
     public void updateUser(User user) {
         String sql = "UPDATE " + USER_TABLE_NAME + " SET first_name=?, last_name=?, email=?, age=?, address=? WHERE id=?";
         jdbcTemplate.update(
-                sql,
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getAge(),
-                user.getAddress(),
-                user.getId()
-        );
+            sql,
+            user.getFirstName(),
+            user.getLastName(),
+            user.getEmail(),
+            user.getAge(),
+            user.getAddress(),
+            user.getId());
     }
 
     @Override
@@ -75,12 +73,15 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Boolean checkIfUserExists(Long id) {
-        if(this.getUserById(id) == null){
-            return false;
-        } else {
-            return true;
+    public User getUserByEmail(String userEmail) {
+        String sql = "SELECT * FROM " + USER_TABLE_NAME + " WHERE email=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, userMapper, userEmail);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("Empty Data Warning");
+            return null;
         }
     }
+
 
 }

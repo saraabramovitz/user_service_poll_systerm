@@ -11,5 +11,5 @@ public interface UserRepository {
     User getUserById(Long id);
     List<User> getAllUsers();
     void registerUserById(Long id);
-    Boolean checkIfUserExists(Long id);
+    User getUserByEmail(String userEmail);
 }
