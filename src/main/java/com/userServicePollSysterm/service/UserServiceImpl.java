@@ -57,15 +57,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUserById(Long userId) {
-        try {
-            pollService.deletePollAnswersByUserId(userId);
-            if(userRepository.getUserById(userId) != null){
-                userRepository.deleteUserById(userId);
-            } else {
-                throw new IllegalArgumentException("User does not exist.");
-            }
-        } catch (IllegalArgumentException e){
-            throw e;
+        pollService.deletePollAnswersByUserId(userId);
+        if(userRepository.getUserById(userId) != null){
+            userRepository.deleteUserById(userId);
+        } else {
+            throw new IllegalArgumentException("User does not exist.");
         }
     }
 
