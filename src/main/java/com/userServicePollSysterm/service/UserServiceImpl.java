@@ -67,15 +67,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(Long userId) {
-        try {
+
             if(userRepository.getUserById(userId) != null){
                 return userRepository.getUserById(userId);
             } else {
                 throw new IllegalArgumentException("User does not exist.");
             }
-        } catch (IllegalArgumentException e){
-            throw e;
-        }
+
     }
 
     @Override
