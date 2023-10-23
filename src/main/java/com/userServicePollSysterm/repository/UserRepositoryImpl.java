@@ -55,7 +55,6 @@ public class UserRepositoryImpl implements UserRepository{
         try {
             return jdbcTemplate.queryForObject(sql, userMapper, id);
         } catch (EmptyResultDataAccessException e) {
-            System.out.println("Empty Data Warning");
             return null;
         }
     }
@@ -78,7 +77,6 @@ public class UserRepositoryImpl implements UserRepository{
         try {
             return jdbcTemplate.queryForObject(sql, userMapper, userEmail);
         } catch (EmptyResultDataAccessException e) {
-            System.out.println("Empty Data Warning");
             return null;
         }
     }

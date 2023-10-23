@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void createUser(User user) {
-        try {
             if (user.getId() == null){
                 String userEmail = user.getEmail();
                 if(userRepository.getUserByEmail(userEmail) == null){
@@ -31,9 +30,6 @@ public class UserServiceImpl implements UserService{
             } else {
                 throw new IllegalArgumentException("User already exists.");
             }
-        } catch (IllegalArgumentException e){
-            throw e;
-        }
     }
 
     @Override
@@ -106,4 +102,3 @@ public class UserServiceImpl implements UserService{
 
 
 }
-
