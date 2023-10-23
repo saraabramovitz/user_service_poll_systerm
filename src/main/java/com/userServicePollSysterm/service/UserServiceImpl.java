@@ -34,23 +34,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user) {
-        try {
-            User selectedUser = userRepository.getUserById(user.getId());
-            if (selectedUser != null) {
-                if (user.getEmail() == selectedUser.getEmail()) {
+        User selectedUser = userRepository.getUserById(user.getId());
+        if (selectedUser != null) {
+            if (user.getEmail() == selectedUser.getEmail()) {
+                userRepository.updateUser(user);
+            } else {
+                if (userRepository.getUserByEmail(user.getEmail()) == null) {
                     userRepository.updateUser(user);
                 } else {
-                    if (userRepository.getUserByEmail(user.getEmail()) == null) {
-                        userRepository.updateUser(user);
-                    } else {
-                        throw new IllegalArgumentException("Email already exists.");
-                    }
+                    throw new IllegalArgumentException("Email already exists.");
                 }
-            } else {
-                throw new IllegalArgumentException("User does not exist.");
             }
-        } catch (IllegalArgumentException e){
-            throw e;
+        } else {
+            throw new IllegalArgumentException("User does not exist.");
         }
     }
 
@@ -67,13 +63,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(Long userId) {
-
-            if(userRepository.getUserById(userId) != null){
-                return userRepository.getUserById(userId);
-            } else {
-                throw new IllegalArgumentException("User does not exist.");
-            }
-
+        if(userRepository.getUserById(userId) != null){
+            return userRepository.getUserById(userId);
+        } else {
+            throw new IllegalArgumentException("User does not exist.");
+        }
     }
 
     @Override
@@ -82,14 +76,10 @@ public class UserServiceImpl implements UserService{
     }
 
     public void registerUserById(Long userId) {
-        try {
-            if(userRepository.getUserById(userId) != null){
-                userRepository.registerUserById(userId);
-            } else {
-                throw new IllegalArgumentException("User does not exist.");
-            }
-        } catch (IllegalArgumentException e){
-            throw e;
+        if(userRepository.getUserById(userId) != null){
+            userRepository.registerUserById(userId);
+        } else {
+            throw new IllegalArgumentException("User does not exist.");
         }
     }
 
